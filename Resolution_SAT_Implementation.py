@@ -78,66 +78,57 @@ def resolution_solver(clauses_input):
 
 if __name__ == '__main__':
     # --- Test Cases ---
-    # Example 1: (x1 V -x2) & (x2 V x3)
+    # Example 1: 
     clauses1 = [[1, -2], [2, 3]]
     print(f"Clauses 1: {clauses1}")
     print(f"Resolution: {'SAT' if resolution_solver(clauses1) else 'UNSAT'}")
     print("-" * 20)
 
-    # Example 2: (x1) & (-x1)
+    # Example 2:
     clauses2 = [[1], [-1]]
     print(f"Clauses 2: {clauses2}")
     print(f"Resolution: {'SAT' if resolution_solver(clauses2) else 'UNSAT'}")
     print("-" * 20)
 
-    # Example 3: (x1 V x2) & (-x1 V x2) & (x1 V -x2) & (-x1 V -x2)
+    # Example 3: 
     clauses3 = [[1, 2], [-1, 2], [1, -2], [-1, -2]]
     print(f"Clauses 3: {clauses3}")
     print(f"Resolution: {'SAT' if resolution_solver(clauses3) else 'UNSAT'}")
     print("-" * 20)
 
-    # Example 4: Empty clauses (satisfiable)
+    # Example 4: 
     clauses4 = []
     print(f"Clauses 4: {clauses4}")
     print(f"Resolution: {'SAT' if resolution_solver(clauses4) else 'UNSAT'}")
     print("-" * 20)
     
-    # Example 5: Formula with an empty clause (unsatisfiable)
+    # Example 5: 
     clauses5 = [[1,2], []]
     print(f"Clauses 5: {clauses5}")
     print(f"Resolution: {'SAT' if resolution_solver(clauses5) else 'UNSAT'}")
     print("-" * 20)
 
-    # Example 6: (A v B) & (A v ¬B)  => A
+    # Example 6: 
     clauses6 = [[1,2], [1,-2]]
     print(f"Clauses 6: {clauses6}")
     print(f"Resolution: {'SAT' if resolution_solver(clauses6) else 'UNSAT'}") 
     print("-" * 20)
 
-    # Example 7: Pigeonhole Principle PHP(2,1)-like (2 pigeons, 1 hole) - UNSAT
+    # Example 7:
     clauses7 = [[1], [2], [-1, -2]] 
     print(f"Clauses 7: {clauses7}")
     print(f"Resolution: {'SAT' if resolution_solver(clauses7) else 'UNSAT'}")
     print("-" * 20)
 
-    # Example 8: Custom PHP-like instance named clauses_php22 to meet user spec
-    # (Satisfiable, 10 variables, 20 clauses).
-    # Derived from PHP(5 pigeons, 2 holes) with specific constraints:
-    # Vars: x_i1 (pigeon i in hole 1), x_i2 (pigeon i in hole 2). i=1..5
-    # Mapping: P1(1,2), P2(3,4), P3(5,6), P4(7,8), P5(9,10)
-    # Constraints:
-    # 1. Each pigeon i is in H1 or H2 (5 clauses)
-    # 2. Pigeon i is not in both H1 and H2 (5 clauses)
-    # 3. For Hole 1, no two pigeons i,k are in it (10 clauses)
+    # Example 8:
     clauses8 = []
-    # Part 1: Each pigeon in at least one hole (5 clauses)
     for i in range(1, 6): # Pigeons 1 to 5
         clauses8.append([2*i - 1, 2*i])
-    # Part 2: No pigeon in more than one hole (5 clauses)
+
     for i in range(1, 6):
         clauses8.append([-(2*i - 1), -(2*i)])
-    # Part 3: For Hole 1, no two pigeons share it (C(5,2) = 10 clauses)
-    hole1_vars = [2*i - 1 for i in range(1, 6)] # Vars for hole 1: 1, 3, 5, 7, 9
+
+    hole1_vars = [2*i - 1 for i in range(1, 6)] 
     for i in range(len(hole1_vars)):
         for j in range(i + 1, len(hole1_vars)):
             clauses8.append([-hole1_vars[i], -hole1_vars[j]])
